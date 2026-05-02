@@ -300,9 +300,9 @@ class _HomePage2State extends State<HomePage2> {
                                                     controller
                                                         .disposeController(); // اقفل القديم
                                                     controller = TimerController(
-                                                      // workMinutes: sectime,
-                                                      // breakMinutes: localValue1,
-                                                      // totalCircles: localCycles,
+                                                      workMinutes: sectime,
+                                                      breakMinutes: localValue1,
+                                                      totalCircles: localCycles,
                                                     ); //
                                                     print("             ");
                                                     print(sectime);

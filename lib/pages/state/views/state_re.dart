@@ -90,7 +90,9 @@
 
 import 'package:flutter/material.dart'; 
 import 'package:gap/gap.dart';
-import 'package:study_lamp/core/app_colors.dart'; 
+import 'package:study_lamp/core/app_colors.dart';
+import 'package:study_lamp/pages/current_stute/model/appdata.dart';
+import 'package:study_lamp/pages/current_stute/model/productmodel.dart'; 
 import 'package:study_lamp/pages/state/widget/adva.dart';
 import 'package:study_lamp/pages/state/widget/bar_shart.dart';
 import 'package:study_lamp/pages/state/widget/juice.dart';
@@ -106,7 +108,10 @@ class StateRe extends StatefulWidget {
 class _StateDistributionCardState extends State<StateRe> {
 
   
-   
+   final source =
+    AppData.products ;
+
+late final topState = getTopState(source as List);
 
 
   @override
@@ -139,9 +144,9 @@ class _StateDistributionCardState extends State<StateRe> {
                Gap(10),
               PieChart1( ),
                 Gap(10),
-              Adva(),
+              Adva(source: topState,  ),
               Gap(10),
-              Juice(),
+              Juice(source: topState,),
             ],
            ),
          ),
@@ -150,3 +155,31 @@ class _StateDistributionCardState extends State<StateRe> {
     ;  }
 }
 
+String getTopState(List source) {
+  if (source.isEmpty) return "";
+
+  Map<String, double> grouped = {};
+
+  for (var item in source) {
+    if (item is! ProductModel) continue;
+
+    final state = item.name;
+    final minutes = item.minutes?.toDouble();
+
+    grouped[state] = (grouped[state] ?? 0) + minutes!;
+  }
+
+  if (grouped.isEmpty) return "";
+
+  String topState = "";
+  double maxValue = 0;
+
+  grouped.forEach((key, value) {
+    if (value > maxValue) {
+      maxValue = value;
+      topState = key;
+    }
+  });
+
+  return topState;
+}

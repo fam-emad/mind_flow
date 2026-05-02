@@ -208,27 +208,57 @@ class _BarchartState extends State<Barchart> {
   // DEFAULT DATA
   // =========================
   final List<Map<String, dynamic>> defaultSessions = [
-    {
-      "state": "focus",
-      "minutes": 30.0,
-      "start": "12:00",
-      "end": "12:30",
-      "color": Colors.blue,
-    },
-    {
-      "state": "stressed",
-      "minutes": 15.0,
-      "start": "12:30",
-      "end": "12:45",
-      "color": Colors.red,
-    },
-    {
-      "state": "tired",
-      "minutes": 20.0,
-      "start": "12:45",
-      "end": "13:05",
-      "color": Colors.purple,
-    },
+  
+  {
+    "state": "Focus",
+    "minutes": 30.0,
+    "start": "12:00",
+    "end": "12:30",
+    "color": Color(0xFF1E88E5),
+  },
+  {
+    "state": "Stressed",
+    "minutes": 15.0,
+    "start": "12:30",
+    "end": "12:45",
+    "color": Color(0xFFFB8C00),
+  },
+  {
+    "state": "Stressed",
+    "minutes": 15.0,
+    "start": "12:30",
+    "end": "12:45",
+    "color": Color(0xFFFB8C00),
+  },
+  {
+    "state": "Tired",
+    "minutes": 20.0,
+    "start": "12:45",
+    "end": "13:05",
+    "color": Color(0xFF90A4AE),
+  },
+  {
+    "state": "Happy",
+    "minutes": 25.0,
+    "start": "13:05",
+    "end": "13:30",
+    "color": Color(0xFFFDD835),
+  },
+  {
+    "state": "Surprised",
+    "minutes": 10.0,
+    "start": "13:30",
+    "end": "13:40",
+    "color": Color(0xFFBA68C8),
+  },
+  {
+    "state": "Angry",
+    "minutes": 15.0,
+    "start": "13:40",
+    "end": "13:55",
+    "color": Color(0xFFE53935),
+  },
+
   ];
 
   // =========================
@@ -281,7 +311,31 @@ class _BarchartState extends State<Barchart> {
       return a["minutes"] > b["minutes"] ? a : b;
     });
   }
+Color parseColor(dynamic color) {
+  if (color == null) {
+    return const Color(0xFF9E9E9E); // fallback
+  }
 
+  if (color is Color) {
+    return color;
+  }
+
+  if (color is int) {
+    return Color(color);
+  }
+
+  if (color is String) {
+    String hex = color.replaceFirst('#', '');
+
+    if (hex.length == 6) {
+      hex = 'FF$hex'; // add opacity if missing
+    }
+
+    return Color(int.parse('0x$hex'));
+  }
+
+  return const Color(0xFF9E9E9E);
+}
   @override
   Widget build(BuildContext context) {
     final data = groupedSessions;
@@ -296,7 +350,7 @@ class _BarchartState extends State<Barchart> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Focus Analysis",
+            "  Analysis",
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
 
@@ -388,7 +442,7 @@ class _BarchartState extends State<Barchart> {
                         borderRadius: BorderRadius.circular(6),
                         color: isBest
                             ? const Color(0xFF59FF7A)
-                            : item["color"],
+    : parseColor(item["color"]),
                       ),
                     ],
                   );

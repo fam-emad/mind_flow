@@ -1,75 +1,106 @@
 import 'package:flutter/material.dart';
+import 'package:study_lamp/pages/state/views/state_re.dart';
 
+/// =============================
+/// ADVICE ENGINE
+/// =============================
+String getAdvice(String state) {
+   switch (state.toLowerCase()) {
+    case "focused":
+     
+      return "You are in a focused state. Keep it stable by removing distractions, silencing notifications, and working in short deep-work cycles (25–45 minutes). Try to avoid switching tasks frequently to maintain flow.";
+
+    case "stressed":
+      return "You seem stressed. Pause for a few minutes, take slow deep breaths, and step away from the task briefly. Break your work into smaller steps instead of handling everything at once, and return with a clearer mindset.";
+
+    case "tired":
+      return "You are feeling tired. Your productivity will improve if you take a proper rest, hydrate, and do lighter tasks for a while. Avoid forcing heavy concentration work when your energy is low.";
+
+    case "happy":
+      return "You are in a positive state. This is the best time to handle creative or challenging tasks. Try to channel this energy into productive work while maintaining balance so you don’t burn out later.";
+
+    case "angry":
+      return "You seem frustrated. Stop for a moment before continuing. Avoid making decisions or writing code while in this state. Take a short break to reset your emotions and return with a calmer mindset.";
+
+    case "surprised":
+      return "Your workflow seems unstable or unpredictable. Try to organize your tasks, set clear priorities, and avoid multitasking. Stability will help you regain control of your focus.";
+
+    default:
+      return "Keep tracking your flow consistently. Try to observe your patterns and adjust your work habits based on your energy and focus levels throughout the day.";
+  }
+
+}
+
+/// =============================
+/// SAFE TOP STATE CALCULATION
+/// =============================
+ 
+
+/// =============================
+/// ADVA WIDGET (UI ثابت 100% كما هو)
+/// =============================
 class Adva extends StatelessWidget {
-  const Adva({super.key});
+  final String source;
+
+  const Adva({super.key, required this.source});
 
   @override
   Widget build(BuildContext context) {
-    return    Container(
-      padding: const EdgeInsets.all(16), // مسافة داخلية
-          width: 370,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24), // تدوير الحواف
+   // final safeSource = source.where((e) => e is Map).toList();
 
+   // final topState = getTopState(safeSource);
+   
+ final adviceText = getAdvice(source);
+    return Container(
+      padding: const EdgeInsets.all(16),
+      width: 370,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF0F172A), // لون غامق
-            Color(0xFF020617), // أغمق (زي الصورة)
+            Color(0xFF0F172A),
+            Color(0xFF020617),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        // Gradient background زي الصورة
-
         boxShadow: [
-                    BoxShadow(
-                      color: const Color.fromARGB(255, 81, 65, 71).withOpacity(0.25),
-                      blurRadius: 80,
-                      spreadRadius: 10,
-                    ),
-                  ],
-        // Shadow خفيف
+          BoxShadow(
+            color: const Color.fromARGB(255, 81, 65, 71).withOpacity(0.25),
+            blurRadius: 80,
+            spreadRadius: 10,
+          ),
+        ],
       ),
-
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          // ================= ICON =================
+          // ICON
           Container(
             padding: const EdgeInsets.all(12),
-
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-
               color: Colors.white.withOpacity(0.05),
-              // خلفية خفيفة للأيقونة
-
-              border: Border.all(
-                color: Colors.white12,
-              ),
+              border: Border.all(color: Colors.white12),
             ),
-
             child: const Icon(
-              Icons.auto_awesome, // أيقونة AI (نجوم)
-              color: Color(0xFFA855F7), // بنفسجي
+              Icons.auto_awesome,
+              color: Color(0xFFA855F7),
               size: 22,
             ),
           ),
 
           const SizedBox(width: 16),
 
-          // ================= TEXT =================
+          // TEXT
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                // ===== TITLE =====
                 const Text(
                   "AI FLOW INSIGHT",
                   style: TextStyle(
-                    color: Color(0xFFA855F7), // بنفسجي
+                    color: Color(0xFFA855F7),
                     fontSize: 12,
                     letterSpacing: 1.2,
                     fontWeight: FontWeight.bold,
@@ -78,48 +109,12 @@ class Adva extends StatelessWidget {
 
                 const SizedBox(height: 8),
 
-                // ===== DESCRIPTION =====
-                RichText(
-                  text: const TextSpan(
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 15,
-                      height: 1.5,
-                    ),
-
-                    children: [
-
-                      TextSpan(
-                        text:
-                            "You maintained a flow state for ",
-                      ),
-
-                      TextSpan(
-                        text: "35 minutes",
-                        style: TextStyle(
-                          color: Color(0xFF60A5FA), // أزرق highlight
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      TextSpan(
-                        text:
-                            " straight. This is ",
-                      ),
-
-                      TextSpan(
-                        text: "12%",
-                        style: TextStyle(
-                          color: Color(0xFF60A5FA),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      TextSpan(
-                        text:
-                            " longer than your average. Afternoon sessions seem to be your sweet spot!",
-                      ),
-                    ],
+                Text(
+                  adviceText,
+                  style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 15,
+                    height: 1.5,
                   ),
                 ),
               ],
@@ -127,7 +122,6 @@ class Adva extends StatelessWidget {
           ),
         ],
       ),
-    )
-         ;
+    );
   }
 }

@@ -317,7 +317,7 @@ StreamSubscription? subscription;
     // =========================
     // ⏱ INIT TIME TRACKING
     // =========================
-    startTime = DateFormat('mm:ss:a').format(startDT);
+    startTime = DateFormat('hh:mm:ss:a').format(startDT);
 
 timer = Timer.periodic(Duration(seconds: 1), (timer) {
  // updateTime();
@@ -327,9 +327,10 @@ timer = Timer.periodic(Duration(seconds: 1), (timer) {
       final now = DateTime.now();
 
       for (var item in products) {
-        final start = DateFormat('mm:ss:a').parse(item.startDt!);
+        final start = DateFormat('hh:mm:ss').parse(item.startDt!);
   if (item.endDt == null) {
         item.minutes = now.difference(start).inSeconds;
+        print(item.minutes);
       }}
     });
   }
@@ -500,8 +501,15 @@ void handleIncomingState(String state, String time) {
         backgroundColor: AppColors.background,
         appBar: AppBar(
           backgroundColor: AppColors.background,
-          leading: Icon(Icons.menu, color: AppColors.secondaryColor),
-          title: Text('MIndFlow'),
+         // leading: Icon(Icons.menu, color: AppColors.secondaryColor),
+          title: Text(
+            'Real-time Data',
+            style: TextStyle(
+              fontSize: 25,
+              color: AppColors.textColor_wihte,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
 
         body: islouding
@@ -514,7 +522,7 @@ void handleIncomingState(String state, String time) {
                   // =========================
                   CustomBtm(
                     text: 'AI Monitor',
-                    colorfont: AppColors.textColor_wihte,
+                    colorfont: AppColors.secondaryColor,
                     fontSize: 40,
                     height: 282,
                     width: 342,

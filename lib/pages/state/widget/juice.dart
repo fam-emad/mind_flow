@@ -1,10 +1,59 @@
 import 'package:flutter/material.dart';
 
+String getAdviceImage(String state) {
+  switch (state.toLowerCase()) {
+    case "focused":
+      return "images/assets/6.jpg";
+
+    case "stressed":
+      return "images/assets/2.jpg";
+
+    case "tired":
+      return "images/assets/4.jpg";
+
+    case "happy":
+      return "images/assets/3.jpg";
+
+    case "angry":
+      return "images/assets/1.jpg";
+
+    case "surprised":
+      return  "images/assets/Container (3).png";
+
+    default:
+      return "images/assets/1.jpg";
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Juice extends StatelessWidget {
-  const Juice({super.key});
+    final String source;
+  const Juice({super.key, required this.source});
 
   @override
   Widget build(BuildContext context) {
+     final adviceText =  getAdviceImage(source);
     return Container(
       // الكونتينر الخارجي الأساسي
       width: double.infinity,
@@ -18,12 +67,12 @@ class Juice extends StatelessWidget {
           // 1. صورة العصير (الجزء العلوي)
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-          //   child: Image.asset(
-          //     ' assets/ Container (3).png', // صورة عصير من النت
-          //     height: 200,
-          //     width: double.infinity,
-          //    fit: BoxFit.cover,
-          //  ),
+            child: Image.asset(
+             adviceText, // صورة عصير من النت
+              height: 200,
+              width: double.infinity,
+             fit: BoxFit.cover,
+           ),
           ),
 
           Padding(

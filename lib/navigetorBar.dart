@@ -42,10 +42,10 @@ class _MainScreenState extends State<MainScreen> {
        // cornerRadius: 22,
 
         items: [
-          TabItem(icon: Icons.home, title: "Home"),
           TabItem(icon: Icons.timer, title: "Timer"),
+          TabItem(icon: Icons.sync, title: "Status"),
           TabItem(icon: Icons.bar_chart, title: "Stats"),
-          TabItem(icon: Icons.history_rounded, title: "Stats")
+          TabItem(icon: Icons.history_rounded, title: "history")
         ],
 
         onTap: (index) {
